@@ -1,0 +1,8 @@
+[package]
+name = "dogs-webb-gtk4"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dogs = { git = "https://github.com/Webbopwork/dogs-rust.git" }
+gtk = { git = "https://github.com/gtk-rs/gtk4-rs.git", package = "gtk4", features = ["v4_12"] }

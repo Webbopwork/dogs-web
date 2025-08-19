@@ -1,0 +1,21 @@
+send-button, ip-input, path-input, content-window {
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.err {
+    border-color: #D32F2F;
+}
+
+.ok {
+    border-color: #388E3C;
+}
+
+.sys-err {
+    border-color: #303F9F;
+}
+
+content-label {
+    font-family: monospace;
+}

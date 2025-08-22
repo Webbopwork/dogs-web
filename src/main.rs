@@ -25,7 +25,7 @@ fn main() -> glib::ExitCode {
 fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::builder()
         .application(application)
-        .title("DOGS Text Web Browser")
+        .title("DOGS Web Browser")
         .default_height(720)
         .default_width(1280)
         .build();
@@ -55,8 +55,20 @@ fn build_ui(application: &gtk::Application) {
         .hexpand(true)
         .build();
 
+    let picture_frame = gtk::Picture::builder()
+        .visible(false)
+        .can_shrink(true)
+        .vexpand(true)
+        .hexpand(true)
+        .build();
+
+    let hbox_content = gtk::Box::builder()
+        .orientation(gtk::Orientation::Horizontal)
+        .build();
+
     let content_window = gtk::ScrolledWindow::builder()
         .vexpand(true)
+        .hscrollbar_policy(gtk::PolicyType::Automatic)
         .css_name("content-window")
         .margin_bottom(20)
         .margin_start(20)
@@ -64,11 +76,17 @@ fn build_ui(application: &gtk::Application) {
         .build();
     
     let content_label = gtk::Label::builder()
-        .label("Hello there! Welcome to the 0.0.1 release of the internet browser using the DOGS communication protocol.\n\nThis current client is based on version 0.0.2 of the protocol.\n\nFeel free to insert a compatible adress in the first textbox over this, you don't always need the path.\n\nThen send the request using the cleaverly named \"Send\" button!\n\nGreen borders represents a matching hash, red borders reprsent a hash not matching.\n\nThe first textbox displays the status of Hash1 with these colours, the second textbox is Hash2.\n\nA blurple colour on the first field means that the address doesn't work. Blurple on the second means other internal error.")
+        .label("Hello there! Welcome to the 0.0.2 release of the internet browser using the DOGS communication protocol.\n\nThis current client is based on version 0.0.3 of the web protocol.\n\nFeel free to insert a compatible adress in the first textbox over this, you don't always need the path.\n\nThen send the request using the cleaverly named \"Send\" button!\n\nGreen borders represents a matching hash, red borders reprsent a hash not matching.\n\nThe first textbox displays the status of Hash1 with these colours, the second textbox is Hash2.\n\nA blurple colour on the first field means that the address doesn't work. Blurple on the second means other internal error.")
+        .wrap_mode(gtk::pango::WrapMode::Word)
+        .wrap(true)
+        .hexpand(true)
         .css_name("content-label")
         .build();
 
-    content_window.set_child(Some(&content_label));
+    hbox_content.append(&content_label);
+    hbox_content.append(&picture_frame);
+
+    content_window.set_child(Some(&hbox_content));
 
     let send_button = gtk::Button::builder()
         .label("Send")
@@ -87,7 +105,7 @@ fn build_ui(application: &gtk::Application) {
 
     send_button.connect_clicked(move |button| {
         println!("Send button pressed");
-        backend::communication_start(&ip_input, &path_input, &content_label, &button);
+        backend::communication_start(&ip_input, &path_input, &content_label, &button, &picture_frame);
     });
 
     application.connect_activate(move |_| {

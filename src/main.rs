@@ -4,7 +4,7 @@ mod backend;
 
 fn main() -> glib::ExitCode {
     let application = gtk::Application::builder()
-        .application_id("space.uoxide.dogs-web.text-browser-v0-0-1")
+        .application_id("space.uoxide.dogs-web.browser-v0-0-2")
         .build();
 
     application.connect_startup(|app| {
